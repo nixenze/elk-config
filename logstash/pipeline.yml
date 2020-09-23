@@ -1,0 +1,11 @@
+# This file is where you define your pipelines. You can define multiple.
+# For more information on multiple pipelines, see the documentation:
+#   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
+
+- pipeline.id: system_mesos-log
+  path.config: "/etc/logstash/conf.d/mesos*.conf"
+  queue.type: persisted
+
+- pipeline.id: applog
+  path.config: "/etc/logstash/conf.d/app*.conf"
+  queue.type: persisted

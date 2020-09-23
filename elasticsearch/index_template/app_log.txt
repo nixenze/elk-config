@@ -1,0 +1,69 @@
+curl -X PUT "elastic-x:9200/_template/app_log?pretty" -H 'Content-Type: application/json' -d'
+{
+  "index_patterns" : [
+      "app_log*"
+    ],
+    "settings" : {
+      "index" : {
+        "lifecycle" : {
+          "name" : "app_log_policy"
+        },
+        "number_of_shards" : "3"
+      }
+    },
+    "mappings" : {
+      "_routing" : {
+        "required" : false
+      },
+      "numeric_detection" : false,
+      "dynamic_date_formats" : [
+        "strict_date_optional_time",
+        "yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"
+      ],
+      "_meta" : { },
+      "dynamic" : true,
+      "_source" : {
+        "excludes" : [ ],
+        "includes" : [ ],
+        "enabled" : true
+      },
+      "dynamic_templates" : [
+        {
+          "message_fields" : {
+            "path_match" : "message",
+            "mapping" : {
+              "norms" : false,
+              "type" : "text",
+              "fields" : {
+                "keyword" : {
+                  "ignore_above" : 1000,
+                  "type" : "keyword"
+                }
+              }
+            },
+            "match_mapping_type" : "string",
+            "match" : "*"
+          }
+        },
+        {
+          "string_fields" : {
+            "mapping" : {
+              "norms" : false,
+              "type" : "text",
+              "fields" : {
+                "keyword" : {
+                  "ignore_above" : 256,
+                  "type" : "keyword"
+                }
+              }
+            },
+            "match_mapping_type" : "string",
+            "match" : "*"
+          }
+        }
+      ],
+      "date_detection" : true,
+      "properties" : { }
+    },
+    "aliases" : { }
+}'
