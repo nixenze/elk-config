@@ -1,0 +1,26 @@
+---
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Elasticsearch version {{ es_version }}.
+  become: yes
+  yum:
+    name: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ es_version }}-x86_64.rpm
+    state: present
+  register: elastic_install
+  until: elastic_install is succeeded
+
+
+- include: config.yml
+  # when: elastic_create_config | bool
+
+- name: Ensure Elasticsearch is started and enabled at boot.
+  become: yes
+  service:
+    name: elasticsearch
+    state: started
+    enabled: true
+
+- name: Disable repo to prevent autoupdate
+  command: yum-config-manager --disable  elasticsearch-7.x
+  become: yes
