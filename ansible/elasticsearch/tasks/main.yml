@@ -24,3 +24,10 @@
 - name: Disable repo to prevent autoupdate
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
+
+- name: open firewall 9200-9300
+  ansible.posix.firewalld:
+    port: 9200-9300/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
