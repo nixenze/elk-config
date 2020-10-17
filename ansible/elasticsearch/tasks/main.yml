@@ -14,13 +14,6 @@
 - include: config.yml
   # when: elastic_create_config | bool
 
-- name: Ensure Elasticsearch is started and enabled at boot.
-  become: yes
-  service:
-    name: elasticsearch
-    state: started
-    enabled: true
-
 - name: Disable repo to prevent autoupdate
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
@@ -32,6 +25,13 @@
 - name: reload firewall
   command: firewall-cmd --reload
   become: yes
+
+- name: Ensure Elasticsearch is started and enabled at boot.
+  become: yes
+  service:
+    name: elasticsearch
+    state: started
+    enabled: true
 
 # - name: open firewall 9200-9300
 #   become: yes
