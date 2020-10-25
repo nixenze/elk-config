@@ -1,6 +1,6 @@
 ---
-- include: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+# - include: setup-RedHat.yml
+#   when: ansible_os_family == 'RedHat'
 
 - name: Install Elasticsearch version {{ es_version }}.
   become: yes
@@ -18,8 +18,12 @@
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
 
-- name: open firewall 9200-9300
-  command: firewall-cmd --add-port={9200/tcp,9300/tcp} --permanent
+- name: open firewall 9200
+  command: firewall-cmd --add-port=9200/tcp --permanent
+  become: yes
+
+- name: open firewall 9300
+  command: firewall-cmd --add-port=9300/tcp --permanent
   become: yes
 
 - name: reload firewall

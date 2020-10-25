@@ -1,0 +1,22 @@
+curl -X PUT "elastic-x:9200/_ilm/policy/app_log_policy?pretty" -H 'Content-Type: application/json' -d' 
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms",
+        "actions": {
+          "set_priority": {
+            "priority": 100
+          }
+        }
+      },
+      "delete": {
+        "min_age": "3d",
+        "actions": {
+          "delete": {}
+        }
+      }
+    }
+  }
+}
+'

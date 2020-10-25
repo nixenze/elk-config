@@ -1,0 +1,37 @@
+---
+- name: Install Logstash version {{ logstash_version }}.
+  become: yes
+  yum:
+    name: https://artifacts.elastic.co/downloads/logstash/logstash-{{ logstash_version }}.rpm
+    state: present
+  register: logstash_install
+  until: logstash_install is succeeded
+
+- name: Install Java
+  command: yum install java-11-openjdk-devel
+  become: yes
+
+- name: Install JDBC
+  command: yum install mysql-connector-java
+  become: yes
+
+- include: config.yml
+
+- name: Disable repo to prevent autoupdate
+  command: yum-config-manager --disable  elasticsearch-7.x
+  become: yes
+
+- name: open firewall 5044
+  command: firewall-cmd --add-port=5044/tcp --permanent
+  become: yes
+
+- name: reload firewall
+  command: firewall-cmd --reload
+  become: yes
+
+- name: Ensure Logstash is started and enabled at boot.
+  become: yes
+  service:
+    name: logstash
+    state: started
+    enabled: true

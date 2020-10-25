@@ -1,0 +1,10 @@
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts:
+{% for host in groups['elasticsearch'] %}
+  - {{host}}
+{% endfor %}
+
+path.data: /var/lib/logstash
+pipeline.ordered: auto
+path.logs: /var/log/logstash
+

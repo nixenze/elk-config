@@ -1,0 +1,3 @@
+---
+logstash_version: "7.9.3"
+logstash_heap_size: "4g"

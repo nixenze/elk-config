@@ -1,0 +1,21 @@
+input {
+  jdbc {
+    jdbc_driver_library => "/usr/share/java/mysql-connector-java.jar"
+    jdbc_driver_class => "com.mysql.jdbc.Driver"
+    jdbc_connection_string => "jdbc:mysql://{{ groups[head][0] }}:3306/INFOLOGGER"
+    jdbc_user => "infoLoggerAdmin"
+    jdbc_password => "ilPwdA"
+    jdbc_paging_enabled => true
+    schedule => "* * * * *"
+    statement => "SELECT facility, message, pid, hostname, severity, system, timestamp, username FROM messages WHERE timestamp > :sql_last_value ORDER BY timestamp"
+    tracking_column => "timestamp"
+  }
+}
+
+output {
+  elasticsearch {
+    index => "app_log-%{+yyyy.MM.dd}"
+    hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+  }
+}
+

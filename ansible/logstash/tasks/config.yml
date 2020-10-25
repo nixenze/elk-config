@@ -1,0 +1,49 @@
+---
+- name: Copy Logstash configuration.
+  block:
+    - name: logstash.yml
+      become: yes
+      template:
+        src: logstash.yml.j2
+        dest: "/etc/logstash/logstash.yml"
+        owner: root
+        group: logstash
+        mode: "660"
+
+    - name: jvm.options
+      become: yes 
+      template:
+        src: jvm.options.j2
+        dest: "/etc/logstash/jvm.options"
+        owner: root
+        group: logstash
+        mode: "660"
+    
+    - name: pipeline setting (pipeline.yml)
+      become: yes
+      template:
+        src: pipeline.yml.j2
+        dest: "/etc/logstash/pipeline.yml"
+        owner: root
+        group: logstash
+        mode: "660"
+
+- name: Copy Pipeline config
+  block:
+    - name: applog pipeline
+      become: yes
+      template:
+        src: applog.conf.j2
+        dest: "/etc/logstash/conf.d/applog.conf"
+        owner: root
+        group: logstash
+        mode: "660"
+
+    - name: mesos-system pipeline
+      become: yes
+      template:
+        src: mesos_system-log.conf.conf.j2
+        dest: "/etc/logstash/conf.d/mesos_system-log.conf"
+        owner: root
+        group: logstash
+        mode: "660"
