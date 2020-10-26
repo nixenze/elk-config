@@ -38,6 +38,8 @@
         owner: root
         group: logstash
         mode: "660"
+      run_once: true
+      delegate_to: ansible_play_hosts[0]
 
     - name: mesos-system pipeline
       become: yes

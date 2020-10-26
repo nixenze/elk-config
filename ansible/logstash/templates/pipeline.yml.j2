@@ -2,6 +2,8 @@
   path.config: "/etc/logstash/conf.d/mesos*.conf"
   queue.type: persisted
 
+{% if inventory_hostname_short == ansible_play_hosts_all[0] %}
 - pipeline.id: applog
   path.config: "/etc/logstash/conf.d/app*.conf"
   queue.type: persisted
+{% endif %}
