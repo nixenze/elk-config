@@ -6,28 +6,35 @@
     state: present
   register: logstash_install
   until: logstash_install is succeeded
+  tags: installation
 
 - name: Install Java
   command: yum install java-11-openjdk-devel
   become: yes
+  tags: installation
 
 - name: Install JDBC
   command: yum install mysql-connector-java
   become: yes
+  tags: installation
 
 - include: config.yml
+  tags: configuration
 
 - name: Disable repo to prevent autoupdate
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
+  tags: configuration
 
 - name: open firewall 5044
   command: firewall-cmd --add-port=5044/tcp --permanent
   become: yes
+  tags: configuration
 
 - name: reload firewall
   command: firewall-cmd --reload
   become: yes
+  tags: configuration
 
 - name: Ensure Logstash is started and enabled at boot.
   become: yes
@@ -35,3 +42,4 @@
     name: logstash
     state: started
     enabled: true
+  tags: execution

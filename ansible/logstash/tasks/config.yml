@@ -27,6 +27,7 @@
         owner: root
         group: logstash
         mode: "660"
+  tags: configuration
 
 - name: Copy Pipeline config
   block:
@@ -49,3 +50,4 @@
         owner: root
         group: logstash
         mode: "660"
+  tags: configuration

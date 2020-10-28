@@ -7,26 +7,32 @@
     state: present
   register: elastic_install
   until: elastic_install is succeeded
+  tags: installation
 
 
 - include: config.yml
+  tags: configuration
   # when: elastic_create_config | bool
 
 - name: Disable repo to prevent autoupdate
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
+  tags: configuration
 
 - name: open firewall 9200
   command: firewall-cmd --add-port=9200/tcp --permanent
   become: yes
+  tags: configuration
 
 - name: open firewall 9300
   command: firewall-cmd --add-port=9300/tcp --permanent
   become: yes
+  tags: configuration
 
 - name: reload firewall
   command: firewall-cmd --reload
   become: yes
+  tags: configuration
 
 - name: Ensure Elasticsearch is started and enabled at boot.
   become: yes
@@ -34,3 +40,4 @@
     name: elasticsearch
     state: started
     enabled: true
+  tags: execution

@@ -7,6 +7,7 @@
     owner: root
     group: elasticsearch
     mode: "660"
+  tags: configuration
 
 - name: Copy jvm.options configuration.
   become: yes 
@@ -16,3 +17,4 @@
     owner: root
     group: elasticsearch
     mode: "660"
+  tags: configuration
