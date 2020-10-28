@@ -1,0 +1,5 @@
+[elasticsearch]
+ansible-[2:3]
+
+[logstash]
+ansible-[2:3]
