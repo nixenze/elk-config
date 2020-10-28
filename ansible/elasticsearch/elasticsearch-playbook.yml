@@ -4,4 +4,4 @@
   roles:
    - role: elasticsearch
   vars:
-    es_heap_size: "2g"
+    elasticsearch_heap_size: "2g"

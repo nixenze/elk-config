@@ -1,11 +1,9 @@
 ---
-# - include: setup-RedHat.yml
-#   when: ansible_os_family == 'RedHat'
 
-- name: Install Elasticsearch version {{ es_version }}.
+- name: Install Elasticsearch version {{ elasticsearch_version }}.
   become: yes
   yum:
-    name: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ es_version }}-x86_64.rpm
+    name: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elasticsearch_version }}-x86_64.rpm
     state: present
   register: elastic_install
   until: elastic_install is succeeded
@@ -36,11 +34,3 @@
     name: elasticsearch
     state: started
     enabled: true
-
-# - name: open firewall 9200-9300
-#   become: yes
-#   ansible.posix.firewalld:
-#     port: 9200-9300/tcp
-#     permanent: yes
-#     state: enabled
-#     immediate: yes
