@@ -9,7 +9,7 @@
   tags: installation
 
 - name: Install Java
-  yum: 
+  yum:
     name: java-11-openjdk-devel
     state: present
   register: Java_install
