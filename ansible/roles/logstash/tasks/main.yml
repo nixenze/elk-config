@@ -9,13 +9,21 @@
   tags: installation
 
 - name: Install Java
-  command: yum install java-11-openjdk-devel
+  yum: 
+    name: java-11-openjdk-devel
+    state: present
+  register: Java_install
+  until: Java_install is succeeded
   become: yes
   tags: installation
 
 - name: Install JDBC
-  command: yum install mysql-connector-java
+  yum:
+    name: mysql-connector-java
+    state: present
   become: yes
+  register: JDBC_install
+  until: JDBC_install is succeeded
   tags: installation
 
 - include: config.yml
@@ -25,16 +33,19 @@
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: open firewall 5044
   command: firewall-cmd --add-port=5044/tcp --permanent
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: reload firewall
   command: firewall-cmd --reload
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: Ensure Logstash is started and enabled at boot.
   become: yes

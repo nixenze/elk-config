@@ -18,21 +18,25 @@
   command: yum-config-manager --disable  elasticsearch-7.x
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: open firewall 9200
   command: firewall-cmd --add-port=9200/tcp --permanent
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: open firewall 9300
   command: firewall-cmd --add-port=9300/tcp --permanent
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: reload firewall
   command: firewall-cmd --reload
   become: yes
   tags: configuration
+  changed_when: false
 
 - name: Ensure Elasticsearch is started and enabled at boot.
   become: yes

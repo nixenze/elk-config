@@ -10,7 +10,7 @@
   tags: configuration
 
 - name: Copy jvm.options configuration.
-  become: yes 
+  become: yes
   template:
     src: jvm.options.j2
     dest: "/etc/elasticsearch/jvm.options"
