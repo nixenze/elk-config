@@ -47,6 +47,12 @@
   tags: configuration
   changed_when: false
 
+- name: manually build logstash service for systemd
+  command: /usr/share/logstash/bin/system-install
+  become: yes
+  tags: installation
+  changed_when: false
+
 - name: Ensure Logstash is started and enabled at boot.
   become: yes
   service:
