@@ -1,0 +1,10 @@
+server.host: {{ ansible_hostname }}
+
+server.name: {{ ansible_hostname }}
+
+elasticsearch.host: 
+{% for host in groups['elasticsearch'] %}
+  - {{host}}
+{% endfor %}
+
+elasticsearch.requestTimeout: 60000

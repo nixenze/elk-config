@@ -1,0 +1,38 @@
+---
+- name: Install Kibana version {{ kibana_version }}.
+  become: yes
+  yum:
+    name: https://artifacts.elastic.co/downloads/kibana/kibana-{{ logstash_version }}-x86_64.rpm
+    state: present
+  register: kibana_install
+  until: kibana_install is succeeded
+  tags: installation
+
+- include: config.yml
+  tags: configuration
+
+- name: Disable repo to prevent autoupdate
+  command: yum-config-manager --disable  elasticsearch-7.x
+  become: yes
+  tags: configuration
+  changed_when: false
+
+- name: open firewall port 5601
+  command: firewall-cmd --add-port=5601/tcp --permanent
+  become: yes
+  tags: configuration
+  changed_when: false
+
+- name: reload firewall
+  command: firewall-cmd --reload
+  become: yes
+  tags: configuration
+  changed_when: false
+
+- name: Ensure Kibana is started and enabled at boot.
+  become: yes
+  service:
+    name: kibana
+    state: started
+    enabled: true
+  tags: execution

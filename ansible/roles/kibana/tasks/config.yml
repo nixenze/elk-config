@@ -1,0 +1,10 @@
+---
+- name: Copy Kibana configuration.
+  become: yes
+  template:
+    src: kibana.yml.j2
+    dest: "/etc/kibana/kibana.yml"
+    owner: root
+    group: kibana
+    mode: "660"
+  tags: configuration
