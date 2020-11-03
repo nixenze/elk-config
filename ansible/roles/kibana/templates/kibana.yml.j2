@@ -4,7 +4,7 @@ server.name: {{ ansible_hostname }}
 
 elasticsearch.host: 
 {% for host in groups['elasticsearch'] %}
-  - {{host}}
+  - http://{{host}}:9200
 {% endfor %}
 
 elasticsearch.requestTimeout: 60000
