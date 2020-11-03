@@ -2,7 +2,7 @@
 - name: Install Kibana version {{ kibana_version }}.
   become: yes
   yum:
-    name: https://artifacts.elastic.co/downloads/kibana/kibana-{{ logstash_version }}-x86_64.rpm
+    name: https://artifacts.elastic.co/downloads/kibana/kibana-{{ kibana_version }}-x86_64.rpm
     state: present
   register: kibana_install
   until: kibana_install is succeeded
