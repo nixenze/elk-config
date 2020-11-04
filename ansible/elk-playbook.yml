@@ -21,3 +21,11 @@
     - role: kibana
   tags: kibana
 
+- name: restart logstash
+  hosts: logstash
+  become: yes
+  tasks:
+  - service:
+      name: logstash
+      state: restarted
+  tags: restart-logstash
