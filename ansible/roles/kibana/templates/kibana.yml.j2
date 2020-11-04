@@ -2,7 +2,7 @@ server.host: {{ ansible_hostname }}
 
 server.name: {{ ansible_hostname }}
 
-elasticsearch.host: 
+elasticsearch.hosts: 
 {% for host in groups['elasticsearch'] %}
   - http://{{host}}:9200
 {% endfor %}
