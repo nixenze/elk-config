@@ -55,8 +55,8 @@
     url: "http://{{ ansible_hostname }}:5601/api/saved_objects/_import"
     # body_format: form-urlencoded
     headers:
-      Content-Type: application/json
+      Content-Type: multipart/form-data; boundary=------------------ThisIsBoundary
       kbn-xsrf: true
     method: POST
-    body: "{'file':'{{ lookup('file','templates/Kibana_dashboard_export_ALL.ndjson')}}'}"
+    src: templates/Kibana_dashboard_export_ALL.ndjson
   tags: configuration
