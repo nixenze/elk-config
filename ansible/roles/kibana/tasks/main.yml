@@ -58,5 +58,5 @@
       Content-Type: multipart/form-data
       kbn-xsrf: true
     method: POST
-    body: file=@templates/Kibana_dashboard_export_ALL.ndjson
+    src: roles/templates/Kibana_dashboard_export_ALL.ndjson
   tags: configuration
