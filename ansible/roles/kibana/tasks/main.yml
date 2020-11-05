@@ -1,43 +1,43 @@
 ---
-- name: Install Kibana version {{ kibana_version }}.
-  become: yes
-  yum:
-    name: https://artifacts.elastic.co/downloads/kibana/kibana-{{ kibana_version }}-x86_64.rpm
-    state: present
-  register: kibana_install
-  until: kibana_install is succeeded
-  tags: installation
+# - name: Install Kibana version {{ kibana_version }}.
+#   become: yes
+#   yum:
+#     name: https://artifacts.elastic.co/downloads/kibana/kibana-{{ kibana_version }}-x86_64.rpm
+#     state: present
+#   register: kibana_install
+#   until: kibana_install is succeeded
+#   tags: installation
 
-- include: config.yml
-  tags: configuration
+# - include: config.yml
+#   tags: configuration
 
-- name: Disable repo to prevent autoupdate
-  command: yum-config-manager --disable  elasticsearch-7.x
-  become: yes
-  tags: configuration
-  changed_when: false
+# - name: Disable repo to prevent autoupdate
+#   command: yum-config-manager --disable  elasticsearch-7.x
+#   become: yes
+#   tags: configuration
+#   changed_when: false
 
-- name: open firewall port 5601
-  command: firewall-cmd --add-port=5601/tcp --permanent
-  become: yes
-  tags: configuration
-  changed_when: false
+# - name: open firewall port 5601
+#   command: firewall-cmd --add-port=5601/tcp --permanent
+#   become: yes
+#   tags: configuration
+#   changed_when: false
 
-- name: reload firewall
-  command: firewall-cmd --reload
-  become: yes
-  tags: configuration
-  changed_when: false
+# - name: reload firewall
+#   command: firewall-cmd --reload
+#   become: yes
+#   tags: configuration
+#   changed_when: false
 
-- name: Ensure Kibana is started and enabled at boot.
-  become: yes
-  service:
-    name: kibana
-    state: started
-    enabled: true
-  tags: execution
+# - name: Ensure Kibana is started and enabled at boot.
+#   become: yes
+#   service:
+#     name: kibana
+#     state: started
+#     enabled: true
+#   tags: execution
 
-- name: Upload Kibana Dashboard
+# - name: Upload Kibana Dashboard
   # block:
   #   - name: copy file to host
   #     copy:
@@ -50,9 +50,10 @@
   #     become: yes
   #     command: "curl -X POST {{ ansible_hostname }}:5601/api/saved_objects/_import -H \"kbn-xsrf: true\" --form file={{ kibana_dashboard_location }}"
   #     changed_when: false
-
+- name: Upload Kibana Dashboard
   uri:
     url: "http://{{ ansible_hostname }}:5601/api/saved_objects/_import"
+    body_format: form-urlencoded
     headers:
       kbn-xsrf: true
     method: POST
