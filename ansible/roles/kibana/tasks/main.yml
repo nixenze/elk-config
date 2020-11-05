@@ -43,7 +43,7 @@
     method: POST
     headers:
       kbn-xsrf: true
-    body_format: form-multipart
+    body_format: json
     body:
       file1:
         filename: Kibana_dashboard_export_ALL.ndjson
