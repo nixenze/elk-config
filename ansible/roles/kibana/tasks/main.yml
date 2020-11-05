@@ -36,3 +36,16 @@
     state: started
     enabled: true
   tags: execution
+
+- name: Upload Kibana Dashboard
+  uri:
+    url: "http://{{ ansible_hostname }}:5601api/saved_objects/_import"
+    method: POST
+    headers:
+      kbn-xsrf: true
+    body_format: form-multipart
+    body:
+      file1:
+        filename: Kibana_dashboard_export_ALL.ndjson
+        mime_type: application/json
+      # text_form_field: value
