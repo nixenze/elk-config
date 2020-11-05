@@ -53,7 +53,6 @@
 - name: Upload Kibana Dashboard
   uri:
     url: "http://{{ ansible_hostname }}:5601/api/saved_objects/_import"
-    body_format: form-urlencoded
     headers:
       kbn-xsrf: true
     method: POST
