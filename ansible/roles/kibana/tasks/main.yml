@@ -55,6 +55,7 @@
     url: "http://{{ ansible_hostname }}:5601/api/saved_objects/_import"
     # body_format: form-urlencoded
     headers:
+      Content-Type: undefined
       Accept: "*/*"
       kbn-xsrf: true
     method: POST
