@@ -52,7 +52,7 @@
   #     changed_when: false
 
   uri:
-    url: "{{ ansible_hostname }}:5601/api/saved_objects/_import"
+    url: "http://{{ ansible_hostname }}:5601/api/saved_objects/_import"
     headers:
       kbn-xsrf: true
     method: POST
