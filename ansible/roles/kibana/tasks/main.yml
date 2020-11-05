@@ -60,10 +60,10 @@
   tags: configuration
 
 - name: upload dashboard
-become: yes
-command: /etc/kibana/upload_dashboard
-changed_when: false
-tags: configuration
+  become: yes
+  command: /etc/kibana/upload_dashboard
+  changed_when: false
+  tags: configuration
 
 # - name: Upload Kibana Dashboard
 #   uri:
