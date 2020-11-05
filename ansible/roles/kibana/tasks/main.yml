@@ -43,9 +43,6 @@
     method: POST
     headers:
       kbn-xsrf: true
-      Content-Type: json
-    body:
-      file1:
-        filename: Kibana_dashboard_export_ALL.ndjson
-        mime_type: application/octet-stream
+      # Content-Type: json
+    body: "{{ lookup('file','Kibana_dashboard_export_ALL.ndjson') }}"
   tags: [configuration, dashboard]
