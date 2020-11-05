@@ -1,2 +1,3 @@
 ---
 kibana_version: "7.9.2"
+kibana_dashboard_location: "/etc/kibana/Kibana_dashboard_export_ALL.ndjson"
