@@ -48,6 +48,6 @@
         mode: "660"
     - name: upload dashboard
       become: yes
-      command: curl -X POST {{ ansible_hostname }}:5601/api/saved_objects/_import -H kbn-xsrf: true --form file={{ kibana_dashboard_location }}
+      command: curl -X POST "{{ ansible_hostname }}":5601/api/saved_objects/_import -H \"kbn-xsrf: true\" --form file="{{ kibana_dashboard_location }}"
       changed_when: false
   tags: configuration
