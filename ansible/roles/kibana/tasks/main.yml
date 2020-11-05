@@ -47,6 +47,6 @@
     body:
       file1:
         filename: Kibana_dashboard_export_ALL.ndjson
-        mime_type: application/json
+        mime_type: application/octet-stream
       # text_form_field: value
   tags: configuration
