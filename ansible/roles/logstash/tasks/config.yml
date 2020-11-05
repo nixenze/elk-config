@@ -22,8 +22,8 @@
     - name: pipeline setting (pipeline.yml)
       become: yes
       template:
-        src: pipeline.yml.j2
-        dest: "/etc/logstash/pipeline.yml"
+        src: pipelines.yml.j2
+        dest: "/etc/logstash/pipelines.yml"
         owner: root
         group: logstash
         mode: "660"
