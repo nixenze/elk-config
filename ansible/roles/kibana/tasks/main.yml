@@ -61,9 +61,7 @@
 
 - name: upload dashboard
   become: yes
-  shell: /etc/kibana/upload_dashboard
-  args:
-    executable: /bin/bash
+  command: /etc/kibana/upload_dashboard
   changed_when: false
   tags: configuration
 
