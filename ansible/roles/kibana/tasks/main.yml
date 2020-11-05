@@ -56,6 +56,6 @@
     headers:
       kbn-xsrf: true
     method: POST
-    src: Kibana_dashboard_export_ALL.ndjson
+    src: templates/Kibana_dashboard_export_ALL.ndjson
 
   tags: configuration
