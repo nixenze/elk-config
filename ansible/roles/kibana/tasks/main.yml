@@ -57,6 +57,6 @@
       kbn-xsrf: true
       Content-Type: application/x-www-form-urlencoded
     method: POST
-    body: file=templates/Kibana_dashboard_export_ALL.ndjson
+    body: file=@templates/Kibana_dashboard_export_ALL.ndjson
   debugger: on_failed
   tags: configuration
