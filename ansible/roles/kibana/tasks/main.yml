@@ -43,10 +43,9 @@
     method: POST
     headers:
       kbn-xsrf: true
-      Content-Type: multipart/form-data
+      Content-Type: json
     body:
       file1:
         filename: Kibana_dashboard_export_ALL.ndjson
         mime_type: application/octet-stream
-      text_form_field: value
   tags: [configuration, dashboard]
