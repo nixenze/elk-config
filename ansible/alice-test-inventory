@@ -7,3 +7,6 @@ elk-test2
 
 [kibana]
 kibana-1
+
+[head]
+FLP-Head
