@@ -47,6 +47,7 @@
         body: "{"policy":{"phases":{"hot":{"min_age":"0ms","actions":{"set_priority":{"priority":100}}},"delete":{"min_age":"3d","actions":{"delete":{"delete_searchable_snapshot":true}}}}}}"
         body_format: json
   run_once: true
+  tags: test
 
 - name: Ensure Elasticsearch is started and enabled at boot.
   become: yes
