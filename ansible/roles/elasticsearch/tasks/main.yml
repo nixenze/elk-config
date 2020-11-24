@@ -38,6 +38,16 @@
   tags: configuration
   changed_when: false
 
+- name: upload template and lifecycle
+  block:
+    - name: upload lifecycle
+      uri:
+        url: http://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
+        method: PUT
+        body: "{"policy":{"phases":{"hot":{"min_age":"0ms","actions":{"set_priority":{"priority":100}}},"delete":{"min_age":"3d","actions":{"delete":{"delete_searchable_snapshot":true}}}}}}"
+        body_format: json
+  run_once: true
+
 - name: Ensure Elasticsearch is started and enabled at boot.
   become: yes
   service:

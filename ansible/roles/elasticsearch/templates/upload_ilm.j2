@@ -1,0 +1,146 @@
+curl -X PUT "http://{{ ansible_hostname }}:9200/_ilm/policy/app_log_policy" -H 'Content-Type: application/json' -d'
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms",
+        "actions": {
+          "set_priority": {
+            "priority": 100
+          }
+        }
+      },
+      "delete": {
+        "min_age": "3d",
+        "actions": {
+          "delete": {
+            "delete_searchable_snapshot": true
+          }
+        }
+      }
+    }
+  }
+}'
+
+curl -X PUT "http://{{ ansible_hostname }}:9200/_ilm/policy/system_mesos_policy" -H 'Content-Type: application/json' -d'
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms",
+        "actions": {
+          "set_priority": {
+            "priority": 100
+          }
+        }
+      },
+      "delete": {
+        "min_age": "30d",
+        "actions": {
+          "delete": {
+            "delete_searchable_snapshot": true
+          }
+        }
+      }
+    }
+  }
+}'
+
+curl -X PUT "http://{{ ansible_hostname }}:9200/_template/app_log?include_type_name" -H 'Content-Type: application/json' -d'
+{
+  "order": 0,
+  "index_patterns": [
+    "app_log*"
+  ],
+  "settings": {
+    "index": {
+      "lifecycle": {
+        "name": "app_log_policy"
+      },
+      "number_of_shards": "3"
+    }
+  },
+  "aliases": {},
+  "mappings": {
+    "_doc": {
+      "_routing": {
+        "required": false
+      },
+      "numeric_detection": false,
+      "dynamic_date_formats": [
+        "strict_date_optional_time",
+        "yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"
+      ],
+      "_meta": {},
+      "dynamic": true,
+      "_source": {
+        "excludes": [],
+        "includes": [],
+        "enabled": true
+      },
+      "dynamic_templates": [
+        {
+          "message_fields": {
+            "path_match": "message",
+            "mapping": {
+              "norms": false,
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "ignore_above": 1000,
+                  "type": "keyword"
+                }
+              }
+            },
+            "match_mapping_type": "string",
+            "match": "*"
+          }
+        },
+        {
+          "string_fields": {
+            "mapping": {
+              "norms": false,
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "ignore_above": 256,
+                  "type": "keyword"
+                }
+              }
+            },
+            "match_mapping_type": "string",
+            "match": "*"
+          }
+        }
+      ],
+      "date_detection": true,
+      "properties": {}
+    }
+  }
+}'
+
+curl -X PUT "http://{{ ansible_hostname }}:9200/_template/system-mesos-guis?include_type_name" -H 'Content-Type: application/json' -d'
+{
+  "order": 0,
+  "index_patterns": [
+    "guis*",
+    "mesos*",
+    "system*"
+  ],
+  "settings": {
+    "index": {
+      "lifecycle": {
+        "name": "system_mesos_policy"
+      },
+      "number_of_shards": "1"
+    }
+  },
+  "aliases": {},
+  "mappings": {
+    "_doc": {
+      "_meta": {},
+      "_source": {},
+      "properties": {}
+    }
+  }
+}'
