@@ -52,7 +52,7 @@
       uri:
         url: http://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
         method: PUT
-        body: {"policy":{"phases":{"hot":{"min_age":"0ms","actions":{"set_priority":{"priority":100}}},"delete":{"min_age":"3d","actions":{"delete":{"delete_searchable_snapshot":true}}}}}}
+        src: templates/applog_lifecycle.json
         body_format: json
 
     - name: upload system-mesos-guis lifecycle
