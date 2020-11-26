@@ -1,0 +1,1 @@
+{"order":0,"index_patterns":["guis*","mesos*","system*"],"settings":{"index":{"lifecycle":{"name":"system_mesos_guis_policy"},"number_of_shards":"1"}},"aliases":{},"mappings":{"_doc":{"_meta":{},"_source":{},"properties":{}}}}
