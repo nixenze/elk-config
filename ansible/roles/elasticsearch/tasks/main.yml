@@ -66,14 +66,14 @@
       uri:
         url: http://{{ inventory_hostname }}:9200/_template/app_log?include_type_name
         method: PUT
-        body: {"order":0,"index_patterns":["app_log*"],"settings":{"index":{"lifecycle":{"name":"app_log_policy"},"number_of_shards":"3"}},"aliases":{},"mappings":{"_doc":{"_routing":{"required":false},"numeric_detection":false,"dynamic_date_formats":["strict_date_optional_time","yyyy\/MM\/dd HH:mm:ss Z||yyyy\/MM\/dd Z"],"_meta":{},"dynamic":true,"_source":{"excludes":[],"includes":[],"enabled":true},"dynamic_templates":[{"message_fields":{"path_match":"message","mapping":{"norms":false,"type":"text","fields":{"keyword":{"ignore_above":1000,"type":"keyword"}}},"match_mapping_type":"string","match":"*"}},{"string_fields":{"mapping":{"norms":false,"type":"text","fields":{"keyword":{"ignore_above":256,"type":"keyword"}}},"match_mapping_type":"string","match":"*"}}],"date_detection":true,"properties":{}}}}
+        body: '{"order":0,"index_patterns":["app_log*"],"settings":{"index":{"lifecycle":{"name":"app_log_policy"},"number_of_shards":"3"}},"aliases":{},"mappings":{"_doc":{"_routing":{"required":false},"numeric_detection":false,"dynamic_date_formats":["strict_date_optional_time","yyyy\/MM\/dd HH:mm:ss Z||yyyy\/MM\/dd Z"],"_meta":{},"dynamic":true,"_source":{"excludes":[],"includes":[],"enabled":true},"dynamic_templates":[{"message_fields":{"path_match":"message","mapping":{"norms":false,"type":"text","fields":{"keyword":{"ignore_above":1000,"type":"keyword"}}},"match_mapping_type":"string","match":"*"}},{"string_fields":{"mapping":{"norms":false,"type":"text","fields":{"keyword":{"ignore_above":256,"type":"keyword"}}},"match_mapping_type":"string","match":"*"}}],"date_detection":true,"properties":{}}}}'
         body_format: json
 
     - name: upload system-mesos-guis template
       uri:
         url: http://{{ inventory_hostname }}:9200/_template/system-mesos-guis?include_type_name
         method: PUT
-        body: {"order":0,"index_patterns":["guis*","mesos*","system*"],"settings":{"index":{"lifecycle":{"name":"system_mesos_guis_policy"},"number_of_shards":"1"}},"aliases":{},"mappings":{"_doc":{"_meta":{},"_source":{},"properties":{}}}}
+        body: '{"order":0,"index_patterns":["guis*","mesos*","system*"],"settings":{"index":{"lifecycle":{"name":"system_mesos_guis_policy"},"number_of_shards":"1"}},"aliases":{},"mappings":{"_doc":{"_meta":{},"_source":{},"properties":{}}}}'
         body_format: json
   run_once: true
   tags: configuration
