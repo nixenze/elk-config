@@ -52,6 +52,8 @@
       uri:
         url: http://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
         method: PUT
+        user: elastic
+        password: elastic
         src: templates/applog-lifecycle.json
         body_format: json
 
@@ -59,6 +61,8 @@
       uri:
         url: http://{{ inventory_hostname }}:9200/_ilm/policy/system_mesos_guis_policy
         method: PUT
+        user: elastic
+        password: elastic
         src: templates/system_mesos_guis-lifecycle.json
         body_format: json
 
@@ -66,6 +70,8 @@
       uri:
         url: http://{{ inventory_hostname }}:9200/_template/app_log?include_type_name
         method: PUT
+        user: elastic
+        password: elastic
         body: templates/applog-index_template.json
         body_format: json
 
@@ -73,6 +79,8 @@
       uri:
         url: http://{{ inventory_hostname }}:9200/_template/system_mesos_guis?include_type_name
         method: PUT
+        user: elastic
+        password: elastic
         src: templates/system_mesos_guis-index_template.json
         body_format: json
   run_once: true
