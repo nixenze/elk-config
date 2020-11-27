@@ -78,7 +78,7 @@
         url_username: elastic
         url_password: elastic
         force_basic_auth: yes
-        body: templates/applog-index_template.json
+        src: templates/applog-index_template.json
         body_format: json
 
     - name: upload system-mesos-guis template
