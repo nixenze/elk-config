@@ -50,7 +50,7 @@
   block:
     - name: upload applog lifecycle
       uri:
-        url: http://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
+        url: https://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
         method: PUT
         url_username: elastic
         url_password: elastic
@@ -59,7 +59,7 @@
 
     - name: upload system-mesos-guis lifecycle
       uri:
-        url: http://{{ inventory_hostname }}:9200/_ilm/policy/system_mesos_guis_policy
+        url: https://{{ inventory_hostname }}:9200/_ilm/policy/system_mesos_guis_policy
         method: PUT
         url_username: elastic
         url_password: elastic
@@ -68,7 +68,7 @@
 
     - name: upload applog template
       uri:
-        url: http://{{ inventory_hostname }}:9200/_template/app_log?include_type_name
+        url: https://{{ inventory_hostname }}:9200/_template/app_log?include_type_name
         method: PUT
         url_username: elastic
         url_password: elastic
@@ -77,7 +77,7 @@
 
     - name: upload system-mesos-guis template
       uri:
-        url: http://{{ inventory_hostname }}:9200/_template/system_mesos_guis?include_type_name
+        url: https://{{ inventory_hostname }}:9200/_template/system_mesos_guis?include_type_name
         method: PUT
         url_username: elastic
         url_password: elastic
