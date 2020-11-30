@@ -11,15 +11,15 @@ This role is written to be deployed on minimum 2 CentOS 7 nodes or more ith iden
 ## Role Description
 - Install Elasticsearch `7.9.2` configured as `Master` and `Data` node
 - Copy configuration files to `/etc/elasticsearch/`
-- Open port` 9200`, `9300`
+- Open port `9200`, `9300`
 - Upload index template and lifecycle configuration to the stack
 
-## Varaibles
+## Variables
 
 Available variables are listed below, along with default values:
 
 
 | Variable                                | Default Value            | Notes                                            |
 | ----------------------------------------|--------------------------|--------------------------------------------------|
-| `elasticsearch_heap_size`               | `4g`                     | Config this variable to be half of your system available memory.<br>E.g. 4g for a node with 8gb memory       |
+| `elasticsearch_heap_size`               | `4g`                     | Config this variable to be half of your system available memory.<br>E.g. `4g` for a node with 8gb memory       |
 
