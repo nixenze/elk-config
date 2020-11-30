@@ -6,7 +6,7 @@ All Elasticsearch nodes deployed with this Ansible Role will be configured as bo
 
 ## Requirements
 
-This role is written to be deployed on minimum 2 CentOS 7 nodes or more ith identical hardware configuration(vCPU, Ram, Storage, etc).
+This role is written to be deployed on minimum 2 CentOS 7 nodes or more with identical hardware configuration (vCPU, Ram, Storage, etc).
 
 ## Role Description
 - Install Elasticsearch `7.9.2` configured as `Master` and `Data` node
@@ -21,5 +21,5 @@ Available variables are listed below, along with default values:
 
 | Variable                                | Default Value            | Notes                                            |
 | ----------------------------------------|--------------------------|--------------------------------------------------|
-| `elasticsearch_heap_size`               | `4g`                     | Config this variable to be half of your system available memory.<br>E.g. `4g` for a node with 8gb memory       |
+| `elasticsearch_heap_size`               | `4g`                     | Config this variable to be half of your available system memory.<br>E.g. `4g` for a node with 8gb memory       |
 
