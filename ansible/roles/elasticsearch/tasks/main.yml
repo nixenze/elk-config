@@ -50,45 +50,29 @@
   block:
     - name: upload applog lifecycle
       uri:
-        url: https://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
+        url: http://{{ inventory_hostname }}:9200/_ilm/policy/app_log_policy
         method: PUT
-        validate_certs: no
-        url_username: elastic
-        url_password: elastic
-        force_basic_auth: yes
         src: templates/applog-lifecycle.json
         body_format: json
 
     - name: upload system-mesos-guis lifecycle
       uri:
-        url: https://{{ inventory_hostname }}:9200/_ilm/policy/system_mesos_guis_policy
+        url: http://{{ inventory_hostname }}:9200/_ilm/policy/system_mesos_guis_policy
         method: PUT
-        validate_certs: no
-        url_username: elastic
-        url_password: elastic
-        force_basic_auth: yes
         src: templates/system_mesos_guis-lifecycle.json
         body_format: json
 
     - name: upload applog template
       uri:
-        url: https://{{ inventory_hostname }}:9200/_template/app_log?include_type_name
+        url: http://{{ inventory_hostname }}:9200/_template/app_log?include_type_name
         method: PUT
-        validate_certs: no
-        url_username: elastic
-        url_password: elastic
-        force_basic_auth: yes
         src: templates/applog-index_template.json
         body_format: json
 
     - name: upload system-mesos-guis template
       uri:
-        url: https://{{ inventory_hostname }}:9200/_template/system_mesos_guis?include_type_name
+        url: http://{{ inventory_hostname }}:9200/_template/system_mesos_guis?include_type_name
         method: PUT
-        validate_certs: no
-        url_username: elastic
-        url_password: elastic
-        force_basic_auth: yes
         src: templates/system_mesos_guis-index_template.json
         body_format: json
   run_once: true
