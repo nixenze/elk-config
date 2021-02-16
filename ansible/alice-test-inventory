@@ -2,8 +2,7 @@
 elastic-[1:3]
 
 [logstash]
-elk-test
-elk-test2
+logstash-[1:2]
 
 [kibana]
 kibana-1

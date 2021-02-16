@@ -1,23 +1,40 @@
 ---
-- hosts: elasticsearch
-  become: yes
-  roles:
-   - role: elasticsearch
-  vars:
-    elasticsearch_heap_size: "2g"
-  tags: elasticsearch
+# - hosts: elasticsearch
+#   become: yes
+#   roles:
+#    - role: elasticsearch
+#   vars:
+#     elasticsearch_heap_size: "2g"
+#   tags: elasticsearch
+
+# - hosts: logstash
+#   become: yes
+#   roles:
+#    - role: logstash
+#   vars:
+#     logstash_heap_size: "4g"
+#   tags: logstash
+
+# - hosts: kibana
+#   become: yes
+#   roles:
+#     - role: kibana
+#   tags: kibana
 
 - hosts: logstash
   become: yes
-  roles:
-   - role: logstash
-  vars:
-    logstash_heap_size: "4g"
-  tags: logstash
+  tasks: 
 
-- hosts: kibana
-  become: yes
-  roles:
-    - role: kibana
-  tags: kibana
+    - name: mesos-system pipeline
+      template:
+        src: mesos_system-log.conf.j2
+        dest: "/etc/logstash/conf.d/mesos_system-log.conf"
+        owner: root
+        group: logstash
+        mode: "660"
 
+    - name: restart logstash
+      service:
+        name: logstash
+        state: restarted
+        enabled: true
