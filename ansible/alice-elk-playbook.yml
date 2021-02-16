@@ -27,7 +27,7 @@
 
     - name: mesos-system pipeline
       template:
-        src: mesos_system-log.conf.j2
+        src: roles/logstash/templates/mesos_system-log.conf.j2
         dest: "/etc/logstash/conf.d/mesos_system-log.conf"
         owner: root
         group: logstash
