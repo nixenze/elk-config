@@ -1,2 +1,3 @@
 ---
 elasticsearch_heap_size: "4g"
+elasticsearch_dev_mode: false

@@ -9,6 +9,8 @@
   until: elastic_install is succeeded
   tags: installation
 
+- include: mode_check.yml
+  tags: installation
 
 - include: config.yml
   tags: configuration

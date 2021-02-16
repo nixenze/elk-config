@@ -1,0 +1,6 @@
+---
+
+- name: Check development deploy mode
+  when: groups['elasticsearch'][0] == groups['kibana'][0] or groups['elasticsearch'][0] == groups['logstash'][0]
+  vars:
+    elasticsearch_dev_mode: true
