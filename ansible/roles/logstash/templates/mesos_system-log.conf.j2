@@ -50,11 +50,21 @@ output {
     }
   }
   else if [agent][type] == "journalbeat" {
-    elasticsearch {
 
-      index => "guis_log-%{+yyyy.MM.dd}"
-      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+    if [systemd][unit] == "zookeeper.service"{
+      elasticsearch {
+        index => "zookeeper_log-%{+yyyy.MM.dd}"
+        hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+      }
     }
+    
+    else {
+      elasticsearch {
+        index => "guis_log-%{+yyyy.MM.dd}"
+        hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+      }
+    }
+
   }
   else if [event][module] == "system" {
     elasticsearch {
