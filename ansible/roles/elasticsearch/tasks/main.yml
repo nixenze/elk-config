@@ -2,7 +2,7 @@
 
 - name: Check if this deployment is in development mode
   include: mode_check.yml
-  tags: installation
+  tags: configuration
 
 - name: Install Elasticsearch version {{ elasticsearch_version }}.
   become: yes
