@@ -44,9 +44,6 @@ filter {
 output {
   if "mesos" in [log][file][path] {
     elasticsearch {
-      user => "logstash_internal"
-      password => "elastic"
-
       index => "mesos-%{+yyyy.MM.dd}"
       hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
     }
@@ -55,10 +52,6 @@ output {
 
     if [systemd][unit] == "zookeeper.service"{
       elasticsearch {
-        user => "logstash_internal"
-        password => "elastic"
-
-
         index => "zookeeper_log-%{+yyyy.MM.dd}"
         hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
       }
@@ -66,9 +59,6 @@ output {
 
     else {
       elasticsearch {
-        user => "logstash_internal"
-        password => "elastic"
-
         index => "guis_log-%{+yyyy.MM.dd}"
         hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
       }
@@ -77,20 +67,12 @@ output {
   }
   else if [event][module] == "system" {
     elasticsearch {
-      user => "logstash_internal"
-      password => "elastic"
-
-
       index => "system-%{+yyyy.MM.dd}"
       hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
     }
   }
   else {
     elasticsearch {
-      user => "logstash_internal"
-      password => "elastic"
-
-
       index => "junk-%{+yyyy.MM.dd}"
       hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
     }
