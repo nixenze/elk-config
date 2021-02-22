@@ -1,5 +1,9 @@
 ---
 
+- name: Check if this deployment is in development mode
+  include: mode_check.yml
+  tags: installation
+
 - name: Install Elasticsearch version {{ elasticsearch_version }}.
   become: yes
   yum:
@@ -7,9 +11,6 @@
     state: present
   register: elastic_install
   until: elastic_install is succeeded
-  tags: installation
-
-- include: mode_check.yml
   tags: installation
 
 - include: config.yml
