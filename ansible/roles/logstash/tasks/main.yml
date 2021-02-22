@@ -1,4 +1,9 @@
 ---
+
+- name: Check if this deployment is in development mode
+  include: mode_check.yml
+  tags: configuration
+
 - name: Install Logstash version {{ logstash_version }}.
   become: yes
   yum:
