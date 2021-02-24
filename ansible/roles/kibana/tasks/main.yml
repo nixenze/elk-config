@@ -42,7 +42,7 @@
   block:
     - name: copy dashboard file to host
       become: yes
-      template:
+      copy:
         src: templates/Kibana_dashboard_export_ALL.ndjson.j2
         dest: "{{ kibana_dashboard_location }}"
         owner: root
