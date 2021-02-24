@@ -23,7 +23,7 @@
 -Xmx{{ elasticsearch_heap_size }}
 
 {% if elasticsearch_dev_mode %}
--Des.enforce.bootstrap.checks : true
+-Des.enforce.bootstrap.checks=true
 {% endif %}
 
 ################################################################

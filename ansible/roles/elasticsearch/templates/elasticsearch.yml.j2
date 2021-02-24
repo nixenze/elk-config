@@ -77,6 +77,12 @@ http.port: 9200
 # Pass an initial list of hosts to perform discovery when this node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
+
+
+{% if elasticsearch_dev_mode %}
+discovery.type: single-node
+
+{% else %}
 discovery.seed_hosts:
 {% for host in groups['elasticsearch'] %}
   - {{host}}
@@ -89,8 +95,6 @@ cluster.initial_master_nodes:
   - {{host}}
 {% endfor %}
 
-{% if elasticsearch_dev_mode %}
-discovery.type: single-node
 {% endif %}
 
 #
