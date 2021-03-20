@@ -61,7 +61,10 @@
 
 - name: upload dashboard
   become: yes
-  script: /etc/kibana/upload_dashboard
+  command: sh /etc/kibana/upload_dashboard
+  changed_when: false
+  tags: configuration
+
 
 # - name: Upload Kibana Dashboard
 #   uri:
