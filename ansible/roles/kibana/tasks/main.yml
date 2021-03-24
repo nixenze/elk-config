@@ -61,7 +61,9 @@
 
 - name: upload dashboard
   become: yes
-  command: sh /etc/kibana/upload_dashboard
+  shell: >
+    set -o pipefail;unset http_proxy;unset https_proxy;
+    sh /etc/kibana/upload_dashboard
   changed_when: false
   tags: configuration
 
