@@ -78,5 +78,7 @@
         method: PUT
         src: templates/system_mesos_guis-index_template.json
         body_format: json
+  environment:
+    no_proxy: "{{ inventory_hostname }}"
   run_once: true
   tags: configuration
