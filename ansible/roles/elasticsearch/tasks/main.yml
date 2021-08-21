@@ -17,11 +17,12 @@
   tags: configuration
   # when: elastic_create_config | bool
 
-- name: Disable repo to prevent autoupdate
-  command: yum-config-manager --disable  elasticsearch-7.x
-  become: yes
-  tags: configuration
-  changed_when: false
+# Previously used for elk 7.9.x 
+# - name: Disable repo to prevent autoupdate
+#   command: yum-config-manager --disable  elasticsearch-7.x
+#   become: yes
+#   tags: configuration
+#   changed_when: false
 
 - name: open firewall 9200
   command: firewall-cmd --add-port=9200/tcp --permanent

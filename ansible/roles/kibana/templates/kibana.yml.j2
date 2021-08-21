@@ -7,6 +7,8 @@ elasticsearch.hosts:
   - http://{{host}}:9200
 {% endfor %}
 
+xpack.encryptedSavedObjects.encryptionKey: "something_at_least_32_characters"
+
 elasticsearch.requestTimeout: 60000
 
 server.maxPayloadBytes: 20000000
