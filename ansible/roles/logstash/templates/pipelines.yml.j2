@@ -1,5 +1,5 @@
 - pipeline.id: system_mesos-log
-  path.config: "/etc/logstash/conf.d/mesos*.conf"
+  path.config: "/etc/logstash/conf.d/system_mesos*.conf"
   queue.type: persisted
 
 {% if inventory_hostname_short == ansible_play_hosts_all[0] %}
