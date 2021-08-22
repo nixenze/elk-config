@@ -4,6 +4,10 @@
   include: mode_check.yml
   tags: configuration
 
+- rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
 - name: Install Logstash version {{ logstash_version }}.
   become: yes
   yum:
