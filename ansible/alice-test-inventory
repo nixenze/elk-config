@@ -1,11 +1,11 @@
 [elasticsearch]
-elastic-test
+elastic-[1:3]
 
 [logstash]
-elastic-test
+logstash-[1:2]
 
 [kibana]
-elastic-test
+kibana-1
 
 [head]
 FLP-Head
