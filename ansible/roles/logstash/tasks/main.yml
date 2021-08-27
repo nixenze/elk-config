@@ -11,7 +11,7 @@
 - name: Install Logstash version {{ logstash_version }}.
   become: yes
   yum:
-    name: https://artifacts.elastic.co/downloads/logstash/logstash-{{ logstash_version }}.rpm
+    name: https://artifacts.elastic.co/downloads/logstash/logstash-{{ logstash_version }}-x86_64.rpm
     state: present
   register: logstash_install
   until: logstash_install is succeeded
