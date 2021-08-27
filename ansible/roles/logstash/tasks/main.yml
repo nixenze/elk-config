@@ -17,14 +17,16 @@
   until: logstash_install is succeeded
   tags: installation
 
-- name: Install Java
-  yum:
-    name: java-11-openjdk-devel
-    state: present
-  register: Java_install
-  until: Java_install is succeeded
-  become: yes
-  tags: installation
+# jdk is now bundled in logstash 7.10+ installation
+# 
+# - name: Install Java
+#   yum:
+#     name: java-11-openjdk-devel
+#     state: present
+#   register: Java_install
+#   until: Java_install is succeeded
+#   become: yes
+#   tags: installation
 
 - name: Install JDBC
   yum:
