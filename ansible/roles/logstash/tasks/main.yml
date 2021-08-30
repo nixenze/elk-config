@@ -28,6 +28,15 @@
 #   become: yes
 #   tags: installation
 
+- name: Install mysql repository (for CS8)
+  become: yes
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+    state: present
+  register: mysql_repo_install
+  until: mysql_repo_install is succeeded
+  tags: installation
+
 - name: Install JDBC
   yum:
     name: mysql-connector-java
@@ -59,6 +68,10 @@
   tags: configuration
   changed_when: false
 
+# this task is probably not necessary for 7.10+
+# as it is for fixing logstash service (~7.9) is not properly built
+# if logstash was installed before java installation.
+# but it will be left here, just in case the assumption is wrong.
 - name: manually build logstash service for systemd
   command: /usr/share/logstash/bin/system-install
   become: yes
