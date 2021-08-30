@@ -28,6 +28,11 @@
 #   become: yes
 #   tags: installation
 
+- name: add mysql gpg key
+  rpm_key:
+    state: present
+    key: http://pgp.mit.edu/pks/lookup?op=get&search=0x8C718D3B5072E1F5
+
 - name: Install mysql repository (for CS8)
   become: yes
   yum:
