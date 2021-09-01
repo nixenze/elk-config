@@ -1,1 +1,1 @@
-curl -X POST http://{{ ansible_hostname }}:5601/api/saved_objects/_import -H "kbn-xsrf: true" --form file=@{{ kibana_dashboard_location }}
+curl -X POST http://{{ ansible_hostname }}:5601/api/saved_objects/_import?overwrite=true -H "kbn-xsrf: true" --form file=@{{ kibana_dashboard_location }}
