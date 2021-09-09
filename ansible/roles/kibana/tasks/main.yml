@@ -64,6 +64,13 @@
         mode: "755"
   tags: configuration
 
+- name: Waits for kibana port 5601 to ready for uploading dashboard
+  wait_for:
+    host: {{ ansible_hostname }}
+    port: 5601
+    delay: 10
+    state: started
+
 - name: upload dashboard
   become: yes
   shell: >
