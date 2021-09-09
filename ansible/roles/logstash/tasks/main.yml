@@ -9,7 +9,7 @@
     key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 - name: Install Logstash version {{ logstash_version }}.
-  become: yes
+  # become: yes
   yum:
     name: https://artifacts.elastic.co/downloads/logstash/logstash-{{ logstash_version }}-x86_64.rpm
     state: present
@@ -77,11 +77,11 @@
 # as it is for fixing logstash service (~7.9) is not properly built
 # if logstash was installed before java installation.
 # but it will be left here, just in case the assumption is wrong.
-- name: manually build logstash service for systemd
-  command: /usr/share/logstash/bin/system-install
-  become: yes
-  tags: installation
-  changed_when: false
+# - name: manually build logstash service for systemd
+#   command: /usr/share/logstash/bin/system-install
+#   become: yes
+#   tags: installation
+#   changed_when: false
 
 - name: Ensure Logstash is started and enabled at boot.
   become: yes
