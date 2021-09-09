@@ -66,7 +66,7 @@
 
 - name: Waits for kibana port 5601 to ready for uploading dashboard
   wait_for:
-    host: {{ ansible_hostname }}
+    host: "{{ ansible_hostname }}"
     port: 5601
     delay: 10
     state: started
