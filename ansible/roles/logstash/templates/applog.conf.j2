@@ -3,7 +3,7 @@ input {
     jdbc_driver_library => "/usr/share/java/mysql-connector-java.jar"
     jdbc_driver_class => "com.mysql.jdbc.Driver"
     jdbc_connection_string => "jdbc:mysql://{{ groups['head'][0] }}:3306/INFOLOGGER"
-    last_run_metadata_path => "/etc/logstash/.logstash_jdbc_last_run"
+    last_run_metadata_path => "/var/lib/logstash/.logstash_jdbc_last_run"
     jdbc_user => "infoLoggerAdmin"
     jdbc_password => "ilPwdA"
     schedule => "* * * * *"
