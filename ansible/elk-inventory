@@ -1,11 +1,11 @@
 [elasticsearch]
-ansible-[2:3]
+ansible-cs8-1
 
 [logstash]
-flp-test-[1:2]
+ansible-cs8-2
 
 [kibana]
-ansible-1
+ansible-cs8-3
 
 [head]
 FLP-Head
