@@ -39,6 +39,22 @@ filter {
       }
     }
   }
+  else if [GUIs] {
+    grok {
+      #match => {"message" => "\e\[\d+m%{NOTSPACE:severity}\e\[\d+m"}
+      match => {"message" => "\b%{LOGLEVEL:severity}"}
+      match => {"[log][file][path]" => "%{GREEDYDATA}/%{GREEDYDATA:service}\.log$"}
+      break_on_match => false
+    }
+    mutate {
+      gsub => [ "message","\e\[\d+m","" ]
+      gsub => [ "message", "\\n\w+ \d{2} \d{2}:\d{2}:\d{2} [a-zA-Z0-9\-\.\_]+ [a-zA-Z\[0-9\]:]+", "" ]
+      gsub => [ "message", " {2,}", " " ]
+      add_field => { "[@metadata][guis_tag]" => "%{GUIs}" }
+      remove_field => [ "GUIs" ]
+      uppercase => [ "severity" ]
+    }
+  }
 }
 
 output {
@@ -48,26 +64,24 @@ output {
       hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
     }
   }
-  else if [agent][type] == "journalbeat" {
-
-    if [systemd][unit] == "zookeeper.service"{
-      elasticsearch {
-        index => "zookeeper_log-%{+yyyy.MM.dd}"
-        hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
-      }
-    }
-
-    else {
-      elasticsearch {
-        index => "guis_log-%{+yyyy.MM.dd}"
-        hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
-      }
-    }
-
-  }
+ 
   else if [event][module] == "system" {
     elasticsearch {
       index => "system-%{+yyyy.MM.dd}"
+      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+    }
+  }
+
+  else if [systemd][unit] == "zookeeper.service"{
+    elasticsearch {
+      index => "zookeeper_log-%{+yyyy.MM.dd}"
+      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+    }
+  }
+
+  else if [@metadata][guis_tag] {
+    elasticsearch {
+      index => "guis_log-%{+yyyy.MM.dd}"
       hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
     }
   }
@@ -78,3 +92,6 @@ output {
     }
   }
 }
+
+
+
