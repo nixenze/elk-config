@@ -55,10 +55,16 @@ filter {
       uppercase => [ "severity" ]
     }
   }
+  else if [Mesos] {
+    mutate {
+      add_field => { "[@metadata][mesos_tag]" => "%{Mesos}" }
+      remove_field => [ "Mesos" ]
+    }
+  }
 }
 
 output {
-  if "mesos" in [log][file][path] {
+  if [@metadata][mesos_tag] {
     elasticsearch {
       index => "mesos-%{+yyyy.MM.dd}"
       hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
