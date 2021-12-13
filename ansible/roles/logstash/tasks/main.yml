@@ -4,7 +4,8 @@
   include: mode_check.yml
   tags: configuration
 
-- rpm_key:
+- name: RPM key for ELK stacks
+  rpm_key:
     state: present
     key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
@@ -48,8 +49,8 @@
     name: mysql-connector-java
     state: present
   become: yes
-  register: JDBC_install
-  until: JDBC_install is succeeded
+  register: jdbc_install
+  until: jdbc_install is succeeded
   tags: installation
 
 - include: config.yml
