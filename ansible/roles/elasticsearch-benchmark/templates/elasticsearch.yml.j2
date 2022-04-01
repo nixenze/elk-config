@@ -10,6 +10,9 @@ network.host: {{ ansible_hostname }}
 
 http.port: 9200
 
+path.data: /var/lib/elasticsearch
+
+path.logs: /var/log/elasticsearch
 
 
 {% if elasticsearch_singlenode_mode %}
