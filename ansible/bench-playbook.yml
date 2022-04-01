@@ -1,0 +1,5 @@
+---
+- hosts: elasticsearch_benchmark
+  become: yes
+  roles:
+   - role: elasticsearch-benchmark
