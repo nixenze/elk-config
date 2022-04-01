@@ -1,7 +1,6 @@
 ---
-
-- name: Check development deploy mode
-  when: (groups['elasticsearch'][0] == groups['kibana'][0]) or (groups['elasticsearch'][0] == groups['logstash'][0])
+- name: Check single node deployment mode
+  when: groups["elasticsearch"] is not defined
   set_fact:
-    elasticsearch_dev_mode: true
+    elasticsearch_singlenode_mode: true
     elasticsearch_heap_size: "{{ (ansible_memtotal_mb/4)|int|abs }}m"

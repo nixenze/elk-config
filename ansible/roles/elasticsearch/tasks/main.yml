@@ -1,17 +1,12 @@
 ---
-
-- name: Check if this deployment is in development mode
+- name: Check if this deployment is in single node mode
   include: mode_check.yml
   tags: configuration
-
-- rpm_key:
-    state: present
-    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 - name: Install Elasticsearch version {{ elasticsearch_version }}.
   become: yes
   yum:
-    name: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elasticsearch_version }}-x86_64.rpm
+    name: elasticsearch-{{ elasticsearch_version }}
     state: present
   register: elastic_install
   until: elastic_install is succeeded
@@ -19,32 +14,17 @@
 
 - include: config.yml
   tags: configuration
-  # when: elastic_create_config | bool
 
-# Previously used for elk 7.9.x 
-# - name: Disable repo to prevent autoupdate
-#   command: yum-config-manager --disable  elasticsearch-7.x
-#   become: yes
-#   tags: configuration
-#   changed_when: false
-
-- name: open firewall 9200
-  command: firewall-cmd --add-port=9200/tcp --permanent
-  become: yes
+- name: open firewall 9200/9300
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: true
   tags: configuration
-  changed_when: false
-
-- name: open firewall 9300
-  command: firewall-cmd --add-port=9300/tcp --permanent
-  become: yes
-  tags: configuration
-  changed_when: false
-
-- name: reload firewall
-  command: firewall-cmd --reload
-  become: yes
-  tags: configuration
-  changed_when: false
+  loop: 
+    - 9200/tcp
+    - 9300/tcp
 
 - name: Ensure Elasticsearch is started and enabled at boot.
   become: yes

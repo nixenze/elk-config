@@ -3,9 +3,13 @@ server.host: {{ ansible_hostname }}
 server.name: {{ ansible_hostname }}
 
 elasticsearch.hosts: 
+{% if (groups['elasticsearch'] is defined) %}
 {% for host in groups['elasticsearch'] %}
   - http://{{host}}:9200
 {% endfor %}
+{% else %}
+  - http://{{ groups['head'][0] }}:9200
+{%  endif %}
 
 xpack.encryptedSavedObjects.encryptionKey: "something_at_least_32_characters"
 

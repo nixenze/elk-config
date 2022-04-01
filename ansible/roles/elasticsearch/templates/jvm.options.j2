@@ -22,7 +22,7 @@
 -Xms{{ elasticsearch_heap_size }}
 -Xmx{{ elasticsearch_heap_size }}
 
-{% if elasticsearch_dev_mode %}
+{% if elasticsearch_singlenode_mode %}
 -Des.enforce.bootstrap.checks=true
 {% endif %}
 

@@ -17,7 +17,11 @@ input {
 output {
   elasticsearch {
     index => "app_log-%{+yyyy.MM.dd}"
-    hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{% if logstash_singlenode_mode %}
+    hosts => ["{{ groups['head'][0] }}:9200"]
+{% else %}
+    hosts => [{% for host in groups['elasticsearch'] %}"{{ host }}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{%  endif %}
   }
 }
 

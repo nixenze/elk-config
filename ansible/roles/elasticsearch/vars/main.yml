@@ -1,4 +1,4 @@
 ---
 elasticsearch_version: "7.12.1"
 elasticsearch_heap_size: "{{ (ansible_memtotal_mb/2)|int|abs }}m"
-elasticsearch_dev_mode: false
+elasticsearch_singlenode_mode: false

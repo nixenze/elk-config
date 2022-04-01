@@ -7,7 +7,7 @@ All Elasticsearch nodes deployed with this Ansible Role will be configured as bo
 ## Requirements
 
 This role is written to be deployed on minimum 2 CentOS 8 Stream nodes or more with identical hardware configuration (vCPU, Ram, Storage, etc).
-Updated to support Development mode. In situation of testing where Elasticsearch, Kibana and Logstash are deployed together on a single host. The role can detect such situation and change to Development mode. It is recommended to have a host with minimum 8 GB Ram when testing.
+Updated to support Single Node mode. In situation of testing where Elasticsearch, Kibana and Logstash are deployed together on a single host. The role can detect such situation and change to Single Node mode. It is recommended to have a host with minimum 8 GB Ram when testing.
 
 In order to use the whole ELK stack, it is required to install Elasticsearch first before Logstash or Kibana. 
 

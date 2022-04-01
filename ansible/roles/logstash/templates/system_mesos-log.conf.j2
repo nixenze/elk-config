@@ -70,34 +70,54 @@ output {
   if [@metadata][mesos_tag] {
     elasticsearch {
       index => "mesos-%{+yyyy.MM.dd}"
-      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{% if logstash_singlenode_mode %}
+    hosts => ["{{ groups['head'][0] }}:9200"]
+{% else %}
+    hosts => [{% for host in groups['elasticsearch'] %}"{{ host }}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{%  endif %}
     }
   }
  
   else if [event][module] == "system" {
     elasticsearch {
       index => "system-%{+yyyy.MM.dd}"
-      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{% if logstash_singlenode_mode %}
+    hosts => ["{{ groups['head'][0] }}:9200"]
+{% else %}
+    hosts => [{% for host in groups['elasticsearch'] %}"{{ host }}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{%  endif %}
     }
   }
 
   else if [systemd][unit] == "zookeeper.service"{
     elasticsearch {
       index => "zookeeper_log-%{+yyyy.MM.dd}"
-      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{% if logstash_singlenode_mode %}
+    hosts => ["{{ groups['head'][0] }}:9200"]
+{% else %}
+    hosts => [{% for host in groups['elasticsearch'] %}"{{ host }}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{%  endif %}
     }
   }
 
   else if [@metadata][guis_tag] {
     elasticsearch {
       index => "guis_log-%{+yyyy.MM.dd}"
-      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{% if logstash_singlenode_mode %}
+    hosts => ["{{ groups['head'][0] }}:9200"]
+{% else %}
+    hosts => [{% for host in groups['elasticsearch'] %}"{{ host }}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{%  endif %}
     }
   }
   else {
     elasticsearch {
       index => "junk-%{+yyyy.MM.dd}"
-      hosts => [{% for host in groups['elasticsearch'] %}"{{host}}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{% if logstash_singlenode_mode %}
+    hosts => ["{{ groups['head'][0] }}:9200"]
+{% else %}
+    hosts => [{% for host in groups['elasticsearch'] %}"{{ host }}:9200"{% if not loop.last %},{% endif %}{% endfor %}]
+{%  endif %}
     }
   }
 }

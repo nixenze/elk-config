@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: o2-base }
+  - { role: basevars }

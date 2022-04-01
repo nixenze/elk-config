@@ -1,0 +1,31 @@
+input {
+        beats {
+                port => 5044
+        }
+}
+filter {
+    # <...> <- More filters are above
+    # Launching external script to make a deeper analysis
+    if [file_path] =~ /.+/ {
+       ruby {
+        code => 'require "open3"
+                 file_path = event.get("file_path")
+                 cmd =  "/opt/bin/logparser.py -f #{file_path}"
+                 stdin, stdout, stderr = Open3.popen3(cmd)
+                 event.set("process_result", stdout.read)
+                 err = stderr.read
+                 if err.to_s.empty?
+                   filter_matched(event)
+                 else
+                   event.set("ext_script_err_msg", err)
+                 end'
+          remove_field => ["file_path"]
+       }
+    }
+    if [process_result] =~ /.+/ {
+       json {
+          source => "process_result"
+          remove_field => [ "process_result" ]
+       }
+    }
+ }

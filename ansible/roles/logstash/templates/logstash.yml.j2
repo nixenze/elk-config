@@ -1,10 +1,18 @@
 xpack.monitoring.enabled: true
 xpack.monitoring.elasticsearch.hosts:
+
+{% if logstash_singlenode_mode %}
+  - {{ groups['head'][0] }}:9200
+{% else %}
 {% for host in groups['elasticsearch'] %}
   - http://{{host}}:9200
 {% endfor %}
+{%  endif %}
 
 path.data: /var/lib/logstash
 pipeline.ordered: auto
 path.logs: /var/log/logstash
 
+pipeline.workers: {{ pipeline_workers }}
+pipeline.batch.size: {{ pipeline_batch_size }}
+pipeline.batch.delay: {{ pipeline_batch_delay }}

@@ -1,47 +1,15 @@
 ---
-
-- name: Check if this deployment is in development mode
+- name: Check if this deployment is in single node mode
   include: mode_check.yml
   tags: configuration
 
-- name: RPM key for ELK stacks
-  rpm_key:
-    state: present
-    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-
 - name: Install Logstash version {{ logstash_version }}.
-  # become: yes
+  become: yes
   yum:
-    name: https://artifacts.elastic.co/downloads/logstash/logstash-{{ logstash_version }}-x86_64.rpm
+    name: logstash-{{ logstash_version }}
     state: present
   register: logstash_install
   until: logstash_install is succeeded
-  tags: installation
-
-# jdk is now bundled in logstash 7.10+ installation
-# 
-# - name: Install Java
-#   yum:
-#     name: java-11-openjdk-devel
-#     state: present
-#   register: Java_install
-#   until: Java_install is succeeded
-#   become: yes
-#   tags: installation
-
-# - name: add mysql gpg key
-#   rpm_key:
-#     state: present
-#     key: http://pgp.mit.edu/pks/lookup?op=get&search=0x8C718D3B5072E1F5
-
-- name: Install mysql repository (for CS8)
-  become: yes
-  yum:
-    name: https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
-    state: present
-    disable_gpg_check: yes
-  register: mysql_repo_install
-  until: mysql_repo_install is succeeded
   tags: installation
 
 - name: Install JDBC
@@ -56,34 +24,20 @@
 - include: config.yml
   tags: configuration
 
-# Previously used for elk 7.9.x 
-# - name: Disable repo to prevent autoupdate
-#   command: yum-config-manager --disable  elasticsearch-7.x
-#   become: yes
-#   tags: configuration
-#   changed_when: false
-
 - name: open firewall 5044
-  command: firewall-cmd --add-port=5044/tcp --permanent
-  become: yes
+  firewalld:
+    port: 5044/tcp
+    permanent: yes
+    state: enabled
+    immediate: true
   tags: configuration
-  changed_when: false
 
-- name: reload firewall
-  command: firewall-cmd --reload
-  become: yes
+- name: Remove problematic TimeoutStopSec option from logstash systemd unit
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/system/logstash.service
+    state: absent
+    line: "TimeoutStopSec=infinity"
   tags: configuration
-  changed_when: false
-
-# this task is probably not necessary for 7.10+
-# as it is for fixing logstash service (~7.9) is not properly built
-# if logstash was installed before java installation.
-# but it will be left here, just in case the assumption is wrong.
-# - name: manually build logstash service for systemd
-#   command: /usr/share/logstash/bin/system-install
-#   become: yes
-#   tags: installation
-#   changed_when: false
 
 - name: Ensure Logstash is started and enabled at boot.
   become: yes

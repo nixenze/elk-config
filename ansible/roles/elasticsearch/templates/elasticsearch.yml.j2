@@ -82,20 +82,22 @@ http.port: 9200
 #
 
 
-{% if elasticsearch_dev_mode %}
+{% if elasticsearch_singlenode_mode %}
 discovery.type: single-node
 
 {% else %}
 discovery.seed_hosts:
+
 {% for host in groups['elasticsearch'] %}
-  - {{host}}
+  - {{ host }}
 {% endfor %}
+
 #
 # Bootstrap the cluster using an initial set of master-eligible nodes:
 #
 cluster.initial_master_nodes:
 {% for host in groups['elasticsearch'] %}
-  - {{host}}
+  - {{ host }}
 {% endfor %}
 
 {% endif %}
