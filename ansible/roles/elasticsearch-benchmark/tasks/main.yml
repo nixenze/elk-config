@@ -1,0 +1,41 @@
+---
+- name: Add Elasticsearch Repo
+  become: yes
+  yum_repository:
+    name: elasticsearch
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    gpgcheck: yes
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    enabled: no
+
+- name: Install Elasticsearch version {{ elasticsearch_version }}.
+  become: yes
+  yum:
+    name: elasticsearch-{{ elasticsearch_version }}
+    enablerepo: elasticsearch
+    state: present
+  register: elastic_install
+  until: elastic_install is succeeded
+  tags: installation
+
+- include: config.yml
+  tags: configuration
+
+- name: open firewall 9200/9300
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: true
+  tags: configuration
+  loop: 
+    - 9200/tcp
+    - 9300/tcp
+
+- name: Ensure Elasticsearch is started and enabled at boot.
+  become: yes
+  service:
+    name: elasticsearch
+    state: started
+    enabled: true
+  tags: execution

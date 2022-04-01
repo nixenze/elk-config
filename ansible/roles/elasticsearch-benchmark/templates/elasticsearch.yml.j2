@@ -1,0 +1,30 @@
+xpack.monitoring.collection.enabled: true
+
+cluster.name: elastic-bench
+
+node.name: {{ ansible_hostname }}
+node.master: true
+node.data: true
+
+network.host: {{ ansible_hostname }}
+
+http.port: 9200
+
+
+
+{% if elasticsearch_singlenode_mode %}
+discovery.type: single-node
+
+{% else %}
+discovery.seed_hosts:
+
+{% for host in groups['elasticsearch_benchmark'] %}
+  - {{ host }}
+{% endfor %}
+
+cluster.initial_master_nodes:
+{% for host in groups['elasticsearch_benchmark'] %}
+  - {{ host }}
+{% endfor %}
+
+{% endif %}

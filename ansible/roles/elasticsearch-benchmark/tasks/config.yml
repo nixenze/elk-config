@@ -1,0 +1,20 @@
+---
+- name: Copy Elastic configuration.
+  become: yes
+  template:
+    src: elasticsearch.yml.j2
+    dest: "/etc/elasticsearch/elasticsearch.yml"
+    owner: root
+    group: elasticsearch
+    mode: "660"
+  tags: configuration
+
+- name: Copy jvm.options configuration.
+  become: yes
+  template:
+    src: jvm.options.j2
+    dest: "/etc/elasticsearch/jvm.options"
+    owner: root
+    group: elasticsearch
+    mode: "660"
+  tags: configuration
