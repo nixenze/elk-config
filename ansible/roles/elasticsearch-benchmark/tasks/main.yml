@@ -3,6 +3,7 @@
   become: yes
   yum_repository:
     name: elasticsearch
+    description: Elasticsearch repository for 7.x packages
     baseurl: https://artifacts.elastic.co/packages/7.x/yum
     gpgcheck: yes
     gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
