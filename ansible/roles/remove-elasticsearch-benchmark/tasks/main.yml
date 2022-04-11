@@ -3,7 +3,7 @@
   become: yes
   service:
     name: elasticsearch
-    state: stop
+    state: stopped
     enabled: true
   tags: execution
 
