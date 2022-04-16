@@ -2,5 +2,4 @@
 - hosts: elasticsearch_benchmark
   become: yes
   roles:
-  #  - role: elasticsearch-benchmark
-    - role: remove-elasticsearch-benchmark
+    - role: elasticsearch-benchmark

@@ -1,2 +1,7 @@
 [elasticsearch_benchmark]
 bench-large
+bench-medium
+bench-small
+
+[elasticsearch_benchmark-master]
+bench-large
