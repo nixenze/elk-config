@@ -1,7 +1,0 @@
----
-- hosts: elasticsearch
-  become: yes
-  roles:
-   - role: elasticsearch
-  vars:
-    elasticsearch_heap_size: "2g"
