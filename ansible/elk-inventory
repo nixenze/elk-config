@@ -1,5 +1,5 @@
 [elasticsearch]
-ansible-cs8-1
+elastic-test
 
 [logstash]
 ansible-cs8-2

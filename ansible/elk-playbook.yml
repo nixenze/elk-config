@@ -3,7 +3,7 @@
   become: yes
   tasks:
   - uri:
-      url: /_snapshot/kmutt_elasticsearch_repo
+      url: http://{{ inventory_hostname }}:9200/_snapshot/kmutt_elasticsearch_repo
       method: PUT
       body: 
         type: url
