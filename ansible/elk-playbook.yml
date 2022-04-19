@@ -9,6 +9,13 @@
         type: url
         settings: 
           url: "{{ elasticsearch_repo_url }}"
+      body_format: json
+  - uri:
+      url: http://{{ inventory_hostname }}:9200/_snapshot/kmutt_elasticsearch_repo/kmutt_elk-17-3-2022/_restore
+      method: POST
+      body: 
+        include_global_state: true
+      body_format: json 
   vars:
     elasticsearch_repo_url: "https://vue-components-develop.s3.ap-southeast-1.amazonaws.com/elastic_snapshot_repo/"
 
