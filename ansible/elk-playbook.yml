@@ -2,20 +2,18 @@
 - hosts: elasticsearch
   become: yes
   tasks:
-  - uri:
-      url: http://{{ inventory_hostname }}:9200/_snapshot/kmutt_elasticsearch_repo
-      method: PUT
-      body: 
-        type: url
-        settings: 
-          url: "{{ elasticsearch_repo_url }}"
-      body_format: json
-  - uri:
-      url: http://{{ inventory_hostname }}:9200/_snapshot/kmutt_elasticsearch_repo/kmutt_elk-17-3-2022/_restore
-      method: POST
-      body: 
-        include_global_state: true
-      body_format: json 
+    - name: Copy Elastic configuration.
+      become: yes
+      template:
+        src: test.yml.j2
+        dest: "/etc/elasticsearch/test.yml"
+        owner: root
+        group: elasticsearch
+        mode: "660"
+      tags: configuration
   vars:
+    elasticsearch_version: "7.12.1"
+    elasticsearch_heap_size: "{{ (ansible_memtotal_mb/2)|int|abs }}m"
+    elasticsearch_singlenode_mode: false
     elasticsearch_repo_url: "https://vue-components-develop.s3.ap-southeast-1.amazonaws.com/elastic_snapshot_repo/"
-
+    elasticsearch_snapshot_name: kmutt_elk-20-04-2022
